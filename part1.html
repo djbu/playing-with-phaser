@@ -19,6 +19,8 @@ var platforms;
 var player;
 var cursors;
 var stars;
+var score = 0;
+var scoreText;
 
 function preload() {
     game.load.image('sky', 'assets/sky.png');
@@ -28,6 +30,7 @@ function preload() {
 }
 
 function create() {
+    
         //  We're going to be using physics, so enable the Arcade Physics system
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -60,7 +63,7 @@ function create() {
 
 
     // The player and its settings
-    player = game.add.sprite(32, game.world.height - 500, 'dude');
+    player = game.add.sprite(32, game.world.height - 150, 'dude');
 
     //  We need to enable physics on the player
     game.physics.arcade.enable(player);
@@ -87,11 +90,13 @@ function create() {
         var star = stars.create(i * 70, 0, 'star');
 
         //  Let gravity do its thing
-        star.body.gravity.y = 6;
+        star.body.gravity.y = 50;
 
         //  This just gives each star a slightly random bounce value
         star.body.bounce.y = 0.7 + Math.random() * 0.2;
     }
+
+    scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
     
 
 
@@ -142,8 +147,11 @@ function collectStar (player, star) {
     // Removes the star from the screen
     star.kill();
 
-}
+    //  Add and update the score
+    score += 10;
+    scoreText.text = 'Score: ' + score;
 
+}
 </script>
 
 </body>
